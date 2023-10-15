@@ -1,0 +1,91 @@
+WindowManager:
+    GalaWindow:
+        id: gala_window
+    EntryExitWindow:
+        id: entry_exit_window
+    ScanWindow:
+        id: scan_window
+
+<GalaWindow>:
+    name: "gala_window"
+
+    BoxLayout:
+        orientation: "vertical"
+        size: root.width, root.height
+        Button:
+            text: "Gala 1"
+            font_size: 32
+            size_hint: (1, .5)
+            on_release:
+                root.press("Gala 1")
+                root.manager.transition.direction = "left"
+                app.root.current = "entry_exit_window"
+
+        Button:
+            text: "Gala 2"
+            font_size: 32
+            size_hint: (1, .5)
+            on_release:
+                root.press("Gala 2")
+                root.manager.transition.direction = "left"
+                app.root.current = "entry_exit_window"
+
+        Button:
+            text: "Gala 3"
+            font_size: 32
+            size_hint: (1, 0.5)
+            on_release:
+                root.press("Gala 3")
+                root.manager.transition.direction = "left"
+                app.root.current = "entry_exit_window"
+
+
+
+<EntryExitWindow>:
+    name: "entry_exit_window"
+
+    BoxLayout:
+        orientation: "vertical"
+        size: root.width, root.height
+
+        Label:
+            id: gala_number
+            text: "Gala"
+        Button:
+            text: "Entrée répétition"
+            on_release:
+                app.root.current = "scan_window"
+        Button:
+            text: "Retour"
+            on_release:
+                root.manager.transition.direction = "right"
+                app.root.current = "gala_window"
+
+
+<ScanWindow>:
+    name: "scan_window"
+
+    BoxLayout:
+        orientation: "vertical"
+        size: root.width, root.height
+
+        Label:
+            id: just_scanned
+            text: "Commencez à scanner"
+
+        TextInput:
+            write_tab: False # permet de ne pas pouvoir écrire de TAB dans le textinput
+            focus: True
+            id: scan_input
+            multiline: False
+            on_focus: self.text = ""
+            on_text_validate: root.validate(self.text) # Appel de la méthode une fois que le texte est validé
+        Label:
+            id: kids_left
+            text : "Élèves restants"
+        Button:
+            text: "Retour à la page précédente"
+
+            on_release:
+                root.manager.transition.direction = "right"
+                app.root.current = "entry_exit_window"
