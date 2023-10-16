@@ -1,0 +1,169 @@
+# LISTE DES COULEURS
+[couleurs]
+    blanc = "FFFFFF"
+    noir = "000000"
+    orange = "FF642e"
+    jaune = "FFCB00"
+    rose = "FAA1F1"
+    rougeClair = "EE0F14"
+    rougeFonce = "B00721"
+    bleuCiel = "66CCFF"
+    bleuFonce = "0086C0"
+    mauve = "BDa8F9"
+    gris = "808080"
+    grisClair = "C4C4C4"
+    bleuNoir = "225091"
+    vert = "9CD326"
+    violet = "784BD1"
+
+# LISTE DES PROFESSEURS
+[profs]
+     [profs.lorena]
+        nom = "Loréna"
+        couleur = "blanc"
+        fond = "bleuCiel"
+        diminutif = "Lor"
+        couleur_sac = "bleuCiel"
+
+    [profs.adeline]
+        nom = "Adeline"
+        couleur = "blanc"
+        fond = "orange"
+        diminutif = "Ad"
+        couleur_sac = "Orange"
+
+    [profs.agathe]
+        nom ="Agathe"
+        couleur = "noir"
+        fond = "jaune"
+        diminutif = "Ag"
+        couleur_sac = ""
+
+    [profs.eleonora]
+        nom = "Eleonora"
+        couleur = "noir"
+        fond = "vert"
+        diminutif = "Eleo"
+        couleur_sac = "Vert"
+
+    [profs.elaura]
+        nom = "Élaura"
+        couleur = "noir"
+        fond = "blanc"
+        diminutif = "El"
+        couleur_sac = "Blanc"
+
+    [profs.louise]
+        nom = "Louise"
+        couleur = "blanc"
+        fond = "rougeClair"
+        diminutif = "Lo"
+        couleur_sac = "Rouge"
+
+     [profs.marie-line]
+        nom = "Marie-Line"
+        couleur = "blanc"
+        fond = "mauve"
+        diminutif = "ML"
+        couleur_sac = "Violet"
+
+    [profs.anne-charlotte]
+        nom = "Anne-Charlotte"
+        couleur = "blanc"
+        fond = "bleuFonce"
+        diminutif = "AC"
+        couleur_sac = "Bleu Foncé"
+
+    [profs.angelique]
+        nom ="Angélique"
+        couleur = "blanc"
+        fond = "rose"
+        diminutif = "An"
+        couleur_sac = "Rose"
+
+    [profs.marie-danielle]
+        nom = "Marie-Danielle"
+        couleur = "blanc"
+        fond = "bleuNoir"
+        diminutif = "MD"
+        couleur_sac = "Noir"
+
+    [profs.almendra]
+        nom = "Almendra"
+        couleur = "blanc"
+        fond = "rougeFonce"
+        diminutif = "Al"
+        couleur_sac = "Rouge"
+
+    [profs.sirarpik]
+        nom = "Sirarpik"
+        couleur = "blanc"
+        fond = "noir"
+        diminutif = "Si"
+        couleur_sac = "Gris"
+
+    [profs.natacha]
+        nom = "Natacha"
+        couleur = "noir"
+        fond = "vert"
+        diminutif = "Na"
+        couleur_sac = ""
+
+    [profs.valentine]
+        nom = "Valentine"
+        couleur = "noir"
+        fond = "jaune"
+        diminutif = "Va"
+        couleur_sac = "Jaune"
+
+    [profs.none]
+        nom = "None"
+        couleur = "rougeFonce"
+        fond = "rougeClair"
+        diminutif = "Prof Inconnu"
+        couleur_sac = ""
+
+    [profs.uma]
+        nom = "Uma"
+        couleur = "blanc"
+        fond = "rougeFonce"
+        diminutif = "Um"
+        couleur_sac = "Rouge"
+
+    [profs.maeliss]
+        nom = "Maëliss"
+        couleur = "noir"
+        fond = "bleuCiel"
+        diminutif = "Ma"
+        couleur_sac = "Bleu Ciel"
+
+    [profs.claire]
+        nom = "Claire"
+        couleur = "noir"
+        fond = "bleuCiel"
+        diminutif = "Cl"
+        couleur_sac = "Bleu Ciel"
+
+    [profs.jeanne]
+        nom = "Jeanne"
+        couleur = "blanc"
+        fond = "rougeClair"
+        diminutif = "Je"
+        couleur_sac = "Rouge"
+
+
+[DataBase]
+    annee_scolaire = "23-24"
+    col_verif = "Inscription 23-24 VÉRIFIÉE"
+    col_saison = "Saison 2023-2024"
+    database_file = "export.xlsx"
+    ordre_gala = "Gala 2024 ordre des cours.xlsx"
+
+[AssoConnect]
+    mail = "info@academie-ballet.fr"
+    password = "71!!!$l=442+84563!=269856!985btn4545+6656!!!5bA#c23=4456543s+A"
+    connection_page = "https://app.assoconnect.com/login"
+
+[AssoConnectFinancial]
+    mail = "mdgrimaud@orange.fr"
+    password = "AssoconnectMD2"
