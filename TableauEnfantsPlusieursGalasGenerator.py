@@ -5,8 +5,6 @@ import openpyxl
 import unidecode
 from openpyxl.styles import *
 
-
-
 var_semaine = data_base_process.fill_planning()
 liste_profs = toml.load("parameters.toml")["profs"]
 db = openpyxl.load_workbook("Gala 2024 ordre des cours.xlsx")
@@ -91,7 +89,6 @@ for level in var_semaine:
         for student in course.liste_eleves:
             students.append(student)
 
-
 student_list = []
 for student in students:
     G1_courses = []
@@ -126,7 +123,7 @@ for student in students:
 
 print(student_list)
 print(len(student_list))
-student_list.sort(key=lambda x:  unidecode.unidecode(x["nom"]) and unidecode.unidecode(x["prénom"]))
+student_list.sort(key=lambda x: unidecode.unidecode(x["nom"]) and unidecode.unidecode(x["prénom"]))
 st_titres = NamedStyle(name="style_titre")
 st_titres.font = Font(name="Arial", size=14, bold=True)
 st_titres.alignment = Alignment(horizontal="center", vertical="center")
@@ -135,35 +132,37 @@ st_titres_icon.font = Font(name="Arial", size=16, bold=False)
 st_titres_icon.alignment = Alignment(horizontal="center", vertical="center")
 
 # ce code n'est utile qu'en exploitant la sortie dans la console
-for G in ["❶❷", "❷❸", "❶❸","❶❷❸"]:
+for G in ["❶❷", "❷❸", "❶❸", "❶❷❸"]:
     ws = db.create_sheet(G)
     ws.title = G
-    
-    ws.append([G, "", "Samedi 16 mars","","", "dimanche 17 mars"])
-    ws[ws.max_row][0].style, ws[ws.max_row][1].style, ws[ws.max_row][2].style, ws[ws.max_row][3].style, ws[ws.max_row][4].style, ws[ws.max_row][5].style = st_titres, st_titres, st_titres, st_titres, st_titres, st_titres
+
+    ws.append([G, "", "Samedi 16 mars", "", "", "dimanche 17 mars"])
+    ws[ws.max_row][0].style, ws[ws.max_row][1].style, ws[ws.max_row][2].style, ws[ws.max_row][3].style, ws[ws.max_row][
+        4].style, ws[ws.max_row][5].style = st_titres, st_titres, st_titres, st_titres, st_titres, st_titres
     ws.append(["Prénom", "Nom", "Entrée", "Sortie", "Gala précédent", "Entrée", "Téléphone", "Cours"])
-    ws[ws.max_row][0].style, ws[ws.max_row][1].style, ws[ws.max_row][2].style, ws[ws.max_row][3].style, ws[ws.max_row][4].style, ws[ws.max_row][5].style, ws[ws.max_row][6].style, ws[ws.max_row][7].style = st_titres, st_titres, st_titres, st_titres, st_titres, st_titres, st_titres, st_titres
+    ws[ws.max_row][0].style, ws[ws.max_row][1].style, ws[ws.max_row][2].style, ws[ws.max_row][3].style, ws[ws.max_row][
+        4].style, ws[ws.max_row][5].style, ws[ws.max_row][6].style, ws[ws.max_row][
+        7].style = st_titres, st_titres, st_titres, st_titres, st_titres, st_titres, st_titres, st_titres
 
     if G == "❶❷":
         for student in student_list:
             if len(student["G1"]) >= 1 and len(student["G2"]) >= 1:
-                print(student["prénom"] +","+student["nom"]+","+str(student["G1"])+","+str(student["G2"]))
+                print(student["prénom"] + "," + student["nom"] + "," + str(student["G1"]) + "," + str(student["G2"]))
                 ws.append([student["prénom"], student["nom"], "", "", "❶", "", student["téléphone"]])
     if G == "❷❸":
         for student in student_list:
             if len(student["G2"]) >= 1 and len(student["G3"]) >= 1:
-                print(student["prénom"] +","+student["nom"]+","+str(student["G2"])+","+str(student["G3"]))
+                print(student["prénom"] + "," + student["nom"] + "," + str(student["G2"]) + "," + str(student["G3"]))
                 ws.append([student["prénom"], student["nom"], "", "", "❷", "", student["téléphone"]])
     if G == "❶❸":
         for student in student_list:
             if len(student["G1"]) >= 1 and len(student["G3"]) >= 1:
-                print(student["prénom"] +","+student["nom"]+","+str(student["G1"])+","+str(student["G3"]))
+                print(student["prénom"] + "," + student["nom"] + "," + str(student["G1"]) + "," + str(student["G3"]))
                 ws.append([student["prénom"], student["nom"], "", "", "❶", "", student["téléphone"]])
     if G == "❶❷❸":
         for student in student_list:
             if len(student["G1"]) >= 1 and len(student["G2"]) >= 1 and len(student["G3"]) >= 1:
-                print(student["prénom"] +","+student["nom"]+","+str(student["G1"])+","+str(student["G3"]))
+                print(student["prénom"] + "," + student["nom"] + "," + str(student["G1"]) + "," + str(student["G3"]))
                 ws.append([student["prénom"], student["nom"], "", "", "❶", "", student["téléphone"]])
 
 db.save("Tableau Enfants à cocher Gala.xlsx")
-

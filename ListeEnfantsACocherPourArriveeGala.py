@@ -91,8 +91,7 @@ for level in var_semaine:
     for course in level:
         for student in course.liste_eleves:
             students.append(student)
-print(len(students))
-print(students)
+
 
 student_list = []
 for student in students:

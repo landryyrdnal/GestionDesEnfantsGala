@@ -32,13 +32,6 @@
         diminutif = "Ad"
         couleur_sac = "Orange"
 
-    [profs.agathe]
-        nom ="Agathe"
-        couleur = "noir"
-        fond = "jaune"
-        diminutif = "Ag"
-        couleur_sac = ""
-
     [profs.eleonora]
         nom = "Eleonora"
         couleur = "noir"
@@ -102,13 +95,6 @@
         diminutif = "Si"
         couleur_sac = "Gris"
 
-    [profs.natacha]
-        nom = "Natacha"
-        couleur = "noir"
-        fond = "vert"
-        diminutif = "Na"
-        couleur_sac = ""
-
     [profs.valentine]
         nom = "Valentine"
         couleur = "noir"
@@ -123,20 +109,6 @@
         diminutif = "Prof Inconnu"
         couleur_sac = ""
 
-    [profs.uma]
-        nom = "Uma"
-        couleur = "blanc"
-        fond = "rougeFonce"
-        diminutif = "Um"
-        couleur_sac = "Rouge"
-
-    [profs.maeliss]
-        nom = "Maëliss"
-        couleur = "noir"
-        fond = "bleuCiel"
-        diminutif = "Ma"
-        couleur_sac = "Bleu Ciel"
-
     [profs.claire]
         nom = "Claire"
         couleur = "noir"
@@ -147,23 +119,16 @@
     [profs.jeanne]
         nom = "Jeanne"
         couleur = "blanc"
-        fond = "rougeClair"
+        fond = "violet"
         diminutif = "Je"
-        couleur_sac = "Rouge"
+        couleur_sac = "Violet"
 
 
 [DataBase]
-    annee_scolaire = "23-24"
-    col_verif = "Inscription 23-24 VÉRIFIÉE"
-    col_saison = "Saison 2023-2024"
-    database_file = "export.xlsx"
-    ordre_gala = "Gala 2024 ordre des cours.xlsx"
+    annee_scolaire = "23-24" # sert à chercher dans les colonnes des cours
+    col_verif = "Inscription 23-24 VÉRIFIÉE" # Nom de la colonne vérifiée pour la saison en cours
+    col_saison = "Saison 2023-2024" # Nom de la colonne de la saison en cours
+    database_file = "export.xlsx" # Ne devrait pas changer a priori
+    ordre_gala = "Gala 2024 ordre des cours.xlsx" # Tableau à refaire chaque année sur le même
+                                                  # modèle en fonction de l’ordre de passage du gala
 
-[AssoConnect]
-    mail = "info@academie-ballet.fr"
-    password = "71!!!$l=442+84563!=269856!985btn4545+6656!!!5bA#c23=4456543s+A"
-    connection_page = "https://app.assoconnect.com/login"
-
-[AssoConnectFinancial]
-    mail = "mdgrimaud@orange.fr"
-    password = "AssoconnectMD2"

@@ -42,7 +42,7 @@ class CoursOrdreGala:
         else:
             return False
 
-# Analyse du fichier excel de l’ordre de passage du gala de l’année et stockage des cours dans une liste
+# Analyse du fichier excel de l’ordre de passage du gala de l’année et création de la liste des cours
 liste_cours_horaires = []
 
 for index, row in workbook.iterrows():
