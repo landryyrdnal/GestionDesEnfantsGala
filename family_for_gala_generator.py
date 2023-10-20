@@ -1,40 +1,47 @@
 import gala_library
 import pandas as pd
 
-
+# On prend la liste des élèves du gala et on la transforme en dataframe
 gala_students = gala_library.make_gala_student_list()
-
 df = pd.DataFrame(gala_students)
-# Nettoyage des doublons
+
+# On nettoie les doublons
 df = df.drop_duplicates(subset=['nom', 'prénom'])
 
-print(df)
-# Triez le DataFrame par nom de famille, numéro de téléphone des parents et mail des parents
+# Trie du DataFrame par nom de famille, numéro de téléphone des parents et mail des parents
 df = df.sort_values(by=['nom', 'téléphone', 'mail'])
 
-# Regroupez les enfants par nom de famille
+# On regroupe les enfants par nom de famille similaires, tel similaires et mails similaires,
 grouped = df.groupby(by=['nom', "téléphone", "mail"])
 
-# Initialisez une liste pour stocker les groupes de frères et sœurs
+# Initialisation d’une liste pour stocker les groupes de frères et sœurs
+family = []
 
-# Parcourez chaque groupe
+# On parcours chaque groupe
 for nom_famille, groupe in grouped:
-    G1G2 = False
-    G1G3 = False
-    G2G3 = False
-    G1G2G3 = False
-    # Si le groupe a plus d'un enfant, ce sont des frères et sœurs
+    groupe['G1G2'] = False
+    groupe['G1G3'] = False
+    groupe['G2G3'] = False
+    groupe['G1G2G3'] = False
+    # Si le groupe a plus d'un enfant, c’est une famille
     if len(groupe) > 1:
+        # On cherche dans quels galas les membres de la famille participent
         G1 = False
         G2 = False
         G3 = False
-        for student in groupe:
-            if student["G1"] > 0:
+        for index, student in groupe.iterrows():
+            if len(student["G1"]) > 0:
                 G1 = True
-            if student["G2"] > 0:
+            if len(student["G2"]) > 0:
                 G2 = True
-            if student["G3"] > 0:
+            if len(student["G3"]) > 0:
                 G3 = True
+        # On assigne les multiples galas si la famille participe à plusieurs galas
+        G1G2 = False
+        G1G3 = False
+        G2G3 = False
+        G1G2G3 = False
+        # Si la famille participe à plusieurs galas alors on l’indique
         if G1 and G2 and G3:
             G1G2G3 = True
         elif G1 and G2:
@@ -43,20 +50,20 @@ for nom_famille, groupe in grouped:
             G1G3 = True
         elif G2 and G3:
             G2G3 = True
-        for student in groupe:
-            student["G1G2G3"] = G1G2G3
-            student["G1G2"] = G1G2
-            student["G1G3"] = G1G3
-            student["G2G3"] = G2G3
+        # On ajoute les colonnes des multiples galas dans la famille
+        for index, student in groupe.iterrows():
+            groupe.at[index, "G1G2G3"] = G1G2G3
+            groupe.at[index, "G1G2"] = G1G2
+            groupe.at[index, "G1G3"] = G1G3
+            groupe.at[index, "G2G3"] = G2G3
+        # On ajoute la famille au groupe des familles
+        family.append(groupe)
 
+# on rassemble toutes les familles en un nouveau dataframe
+family_df = pd.concat(family)
 
+# on exporte le dataframe dans un fichier excel
+excel = "familles.xlsx"
+family_df.to_excel(excel)
 
-# Affichez les groupes de frères et sœurs triés
-for groupe in groupes_fraternelles:
-    print(groupe)
-    print(type(groupe))
-# Ou vous pouvez également stocker les groupes dans un nouveau DataFrame si nécessaire
-nouveau_dataframe = pd.concat(groupes_fraternelles)
-nouveau_dataframe.to_excel("familles.xlsx")
-# Affichez le nouveau DataFrame trié
-print(nouveau_dataframe)
+print(f"Tableau des familles terminé dans {excel}")
