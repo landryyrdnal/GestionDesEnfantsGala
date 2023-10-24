@@ -3,6 +3,9 @@ from kivy.uix.widget import Widget
 from kivy.lang import Builder
 from kivy.uix.screenmanager import ScreenManager, Screen
 from kivy.uix.behaviors.focus import FocusBehavior
+import family_for_gala_generator
+import tableau_appel_gala_generator
+
 
 # Définition des écrans
 
@@ -19,11 +22,15 @@ class EntryExitWindow(Screen):
 # Écran de scan des QR
 class ScanWindow(Screen):
     def validate(self, text):
-        print(text)
+        print(text, type(text))
         self.ids.scan_input.text=""
         FocusBehavior.focus = True
-        self.ids.just_scanned.text = text # pour afficher le texte qui vient juste d’être scanné en haut de l’input
-
+        # on cherche l'index de la ligne correspondant au code
+        index_enfant = df.loc[df["code"]==text].index.tolist()[0]
+        # on prends les informations utiles dont on a besoin
+        nom_enfant = df.at[index_enfant, "prénom"]+ ' ' + df.at[index_enfant, 'nom']
+        print(nom_enfant, type(nom_enfant))
+        self.ids.just_scanned.text = nom_enfant # pour afficher le texte qui vient juste d’être scanné en haut de l’input
 # Définition du screen manager
 class WindowManager(ScreenManager):
     pass
@@ -37,4 +44,5 @@ class GalaApp(App):
         return kv
 
 if __name__ == "__main__":
+    df = tableau_appel_gala_generator.appel_generator()
     GalaApp().run()
