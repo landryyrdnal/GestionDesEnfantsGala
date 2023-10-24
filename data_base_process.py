@@ -4,8 +4,9 @@ import pandas as pd
 import toml
 from openpyxl import *
 import unidecode
+import sys
 
-
+os = sys.platform
 parameters = "parameters.toml"
 liste_profs = toml.load(parameters)["profs"]
 liste_couleurs = toml.load(parameters)["couleurs"]
@@ -15,10 +16,13 @@ annee_scolaire = toml.load(parameters)["DataBase"]["annee_scolaire"]
 debug = False
 
 # Définition de la base de donnée à utiliser
-workbook = pd.read_excel(toml.load(parameters)["DataBase"]["database_file"])
+if os == 'windows':
+    workbook = pd.read_excel(toml.load(parameters)["DataBase"]["database_file"], engine='openpyxl')
+elif os == 'linux':
+    workbook = pd.read_excel(toml.load(parameters)["DataBase"]["database_file"], engine='odf')
 
 # Colonnes de la base de donnée spécifiques à la saison
-col_verif = toml.load(parameters)["DataBase"]["col_verif"]  # nom de la colonne qui atteste de la vérification des inscriptions
+col_verif = toml.load(parameters,)["DataBase"]["col_verif"]  # nom de la colonne qui atteste de la vérification des inscriptions
 col_saison = toml.load(parameters)["DataBase"]["col_saison"]  # nom de la colonne qui indique dans la base de donnée la saison
 
 # Variables diverses
@@ -100,10 +104,6 @@ class CoursDanse():
                 if debug:
                     print("prof trouvé pour le cours {} :{}".format(self.nom_cours, liste_profs[prof]["nom"]))
                 return liste_profs[prof]
-            # elif re.search(liste_profs[prof]["diminutif"], self.nom_cours):
-            #    if debug:
-            #        print("prof trouvé :", liste_profs[prof]["nom"])
-            #    return liste_profs[prof]
 
 
 def chercher_cours(niveau):
