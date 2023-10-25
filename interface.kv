@@ -68,11 +68,30 @@ WindowManager:
     BoxLayout:
         orientation: "vertical"
         size: root.width, root.height
-
-        Label:
-            id: just_scanned
-            text: "Commencez à scanner"
-
+        BoxLayout:
+            orientation : "vertical"
+            Label:
+                id: just_scanned # Prénom & NOM de l'enfant
+                text: "Commencez à scanner"
+            GridLayout: # Grille des chorées
+                id: grid_chorees
+                cols: 2
+                rows: 2
+                Label:
+                    id: choree_1
+                    text: "chorée 1"
+                Label:
+                    id: choree_2
+                    text: "chorée 2"
+                Label:
+                    id: choree_3
+                    text: "chorée 3"
+                Label:
+                    id: choree_4
+                    text: "chorée 4"
+            Label:
+                id: autre_gala
+                text: "autre galas"
         TextInput:
             write_tab: False # permet de ne pas pouvoir écrire de TAB dans le textinput
             focus: True

@@ -39,6 +39,7 @@ class CoursOrdreGala:
             return False
 
 
+
 def ordre_de_passage_creator():
     # Ouverture du fichier excel qui gère l’ordre de passage du gala de l’année
     ordre_gala = toml.load(parameters)["DataBase"]["ordre_gala"]
