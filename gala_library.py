@@ -38,6 +38,16 @@ class CoursOrdreGala:
         else:
             return False
 
+    def __gt__(self, other):
+        if self.gala == other.gala:
+            if self.ordre_passage > other.ordre_passage:
+                return True
+            else:
+                return False
+        raise AssertionError(f"les chorégraphies {self} et {other} n'appartiennent pas au même gala"
+                             f"elles doivent appartenir au même Gala pour pouvoir être comparées." )
+
+
 
 
 def ordre_de_passage_creator():
