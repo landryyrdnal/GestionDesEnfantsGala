@@ -14,22 +14,33 @@ class GalaWindow(Screen):
     def press(self, gala):
         # on assigne la variable gala au texte de la page suivante
         self.manager.ids.entry_exit_window.ids.gala_number.text = gala
+
+
 # Écran du choix entre l’entrée en répétition, la sortie de répétition et l’entrée au gala
 class EntryExitWindow(Screen):
-    pass
+    pasdéfinition de la fonction de scans
+
 
 # Écran de scan des QR
 class ScanWindow(Screen):
     def validate(self, text):
         gala = self.manager.ids.entry_exit_window.ids.gala_number.text
-        nom_enfant, T1, T2, T3, T4 = logic.scan_code(text, df, gala)
-        self.ids.scan_input.text=""
+        nom_enfant, T1, T2, T3, T4, other_g = logic.scan_code(text, df, gala)
+        # Effacement du text dans le TextInput
+        self.ids.scan_input.text = ""
+        # Affichage des cours de l'enfant scanné
         self.ids.choree_1.text = T1
         self.ids.choree_2.text = T2
         self.ids.choree_3.text = T3
         self.ids.choree_4.text = T4
-        self.ids.just_scanned.text = nom_enfant # pour afficher le texte qui vient juste d’être scanné en haut de l’input
+        # Affichage des autres galas de l'enfant
+        self.ids.autre_gala.text = other_g
+        # Affichage du nom de l'enfant scanné
+        self.ids.just_scanned.text = nom_enfant  # pour afficher le texte qui vient juste d’être scanné en haut de l’input
+        # Repointage du focus sur le TextInput après le scan
         FocusBehavior.focus = True
+
+
 # Définition du screen manager
 class WindowManager(ScreenManager):
     pass
@@ -38,9 +49,11 @@ class WindowManager(ScreenManager):
 # Définition du fichier de design KV
 kv = Builder.load_file("interface.kv")
 
+
 class GalaApp(App):
     def build(self):
         return kv
+
 
 if __name__ == "__main__":
     df = tableau_appel_gala_generator.appel_generator()
