@@ -56,6 +56,14 @@ WindowManager:
             on_release:
                 app.root.current = "scan_window"
         Button:
+            text: "Sortie répétition"
+            on_release:
+                app.root.current = "scan_window"
+        Button:
+            text: "Entrée Gala"
+            on_release:
+                app.root.current = "scan_window"
+        Button:
             text: "Retour"
             on_release:
                 root.manager.transition.direction = "right"
@@ -98,7 +106,7 @@ WindowManager:
             id: scan_input
             multiline: False
             on_focus: self.text = ""
-            on_text_validate: root.validate(self.text) # Appel de la méthode une fois que le texte est validé
+            on_text_validate: root.validate(self.text, ) # Appel de la méthode une fois que le texte est validé
         Label:
             id: kids_left
             text : "Élèves restants"
