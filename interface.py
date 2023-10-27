@@ -6,6 +6,7 @@ from kivy.uix.behaviors.focus import FocusBehavior
 import family_for_gala_generator
 import tableau_appel_gala_generator
 import logic
+import records
 
 
 # Définition des écrans
@@ -18,14 +19,21 @@ class GalaWindow(Screen):
 
 # Écran du choix entre l’entrée en répétition, la sortie de répétition et l’entrée au gala
 class EntryExitWindow(Screen):
-    pasdéfinition de la fonction de scans
+    pass
+
 
 
 # Écran de scan des QR
 class ScanWindow(Screen):
     def validate(self, text):
         gala = self.manager.ids.entry_exit_window.ids.gala_number.text
-        nom_enfant, T1, T2, T3, T4, other_g = logic.scan_code(text, df, gala)
+        nom_enfant, T1, T2, T3, T4, other_g = logic.scan_code(text, input_df, gala)
+        # On ajoute l'enfant a la base de donnée finale s'il existe
+        records.record_kid(code_kid=text,
+                           current_gala=gala,
+                           record_col='', # todo: Définir les bonnes variables dans le fichier kv
+                           output_df=output_df,
+                           input_df=input_df)
         # Effacement du text dans le TextInput
         self.ids.scan_input.text = ""
         # Affichage des cours de l'enfant scanné
@@ -56,5 +64,17 @@ class GalaApp(App):
 
 
 if __name__ == "__main__":
-    df = tableau_appel_gala_generator.appel_generator()
+    input_df = tableau_appel_gala_generator.appel_generator()
+    # Définition de la db de sortie
+    output_df =  input_df
+    output_df['Entrée rep. G1'] = False
+    output_df['Sortie rep. G1'] = False
+    output_df['Entrée Gala G1'] = False
+    output_df['Entrée rep. G2'] = False
+    output_df['Sortie rep. G2'] = False
+    output_df['Entrée Gala G2'] = False
+    output_df['Entrée rep. G3'] = False
+    output_df['Sortie rep. G3'] = False
+    output_df['Entrée Gala G3'] = False
+    print(output_df)
     GalaApp().run()
