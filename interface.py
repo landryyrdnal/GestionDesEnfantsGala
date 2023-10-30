@@ -7,6 +7,7 @@ import family_for_gala_generator
 import tableau_appel_gala_generator
 import logic
 import records
+import numpy as np
 
 
 # Définition des écrans
@@ -67,14 +68,6 @@ if __name__ == "__main__":
     input_df = tableau_appel_gala_generator.appel_generator()
     # Définition de la db de sortie
     output_df =  input_df
-    output_df['Entrée rep. G1'] = False
-    output_df['Sortie rep. G1'] = False
-    output_df['Entrée Gala G1'] = False
-    output_df['Entrée rep. G2'] = False
-    output_df['Sortie rep. G2'] = False
-    output_df['Entrée Gala G2'] = False
-    output_df['Entrée rep. G3'] = False
-    output_df['Sortie rep. G3'] = False
-    output_df['Entrée Gala G3'] = False
     print(output_df)
+    output_df.to_excel('test.xlsx')
     GalaApp().run()

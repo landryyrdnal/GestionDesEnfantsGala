@@ -16,10 +16,15 @@ annee_scolaire = toml.load(parameters)["DataBase"]["annee_scolaire"]
 debug = False
 
 # Définition de la base de donnée à utiliser
-if os == 'windows':
+try:
     workbook = pd.read_excel(toml.load(parameters)["DataBase"]["database_file"], engine='openpyxl')
-elif os == 'linux':
-    workbook = pd.read_excel(toml.load(parameters)["DataBase"]["database_file"], engine='odf')
+# Si le fichier excel d’export n’a pas été ouvert et enregistré par excel le code ne fonctionnera pas.
+except ValueError as error:
+    print(error)
+    print("⚠️ ATTENTION il faut ouvrir le fichier «export.xlsx» une fois avec excel et l’enregistrer via excel"
+          " puis relancer le programme,"
+          "le fichier est corrompu par Assoconnect.")
+
 
 # Colonnes de la base de donnée spécifiques à la saison
 col_verif = toml.load(parameters,)["DataBase"]["col_verif"]  # nom de la colonne qui atteste de la vérification des inscriptions
