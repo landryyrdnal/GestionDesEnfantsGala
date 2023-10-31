@@ -1,7 +1,7 @@
 # LISTE DES COULEURS
 [couleurs]
-    blanc = "FFFFFF"
-    noir = "000000"
+    blanc = "FFFFFF" # Toutes les couleur sont écrites en hexadécimale
+    noir = "000000" # Le nom des couleurs doit être unique
     orange = "FF642e"
     jaune = "FFCB00"
     rose = "FAA1F1"
@@ -15,15 +15,17 @@
     bleuNoir = "225091"
     vert = "9CD326"
     violet = "784BD1"
+    rougeRose = "FF158A"
+    bleuCielClair = "A1E3F6"
 
 # LISTE DES PROFESSEURS
 [profs]
      [profs.lorena]
-        nom = "Loréna"
-        couleur = "blanc"
-        fond = "bleuCiel"
-        diminutif = "Lor"
-        couleur_sac = "bleuCiel"
+        nom = "Loréna" # Prénom de la prof (avec première lettre du nom de famille si doublon)
+        couleur = "blanc" # La couleur écrite avec le nom des couleurs ci-dessus
+        fond = "bleuCiel" # La couleur écrite avec le nom des couleurs ci-dessus
+        diminutif = "Lor" # Diminutif de 4 lettres max afin de pouvoir identifier le prof simplement, sans ambiguité
+        couleur_sac = "Bleu Ciel" # La couleur écrite en toute lettre
 
     [profs.adeline]
         nom = "Adeline"
@@ -49,7 +51,7 @@
     [profs.louise]
         nom = "Louise"
         couleur = "blanc"
-        fond = "rougeClair"
+        fond = "rougeRose"
         diminutif = "Lo"
         couleur_sac = "Rouge"
 
@@ -77,21 +79,21 @@
     [profs.marie-danielle]
         nom = "Marie-Danielle"
         couleur = "blanc"
-        fond = "bleuNoir"
+        fond = "noir"
         diminutif = "MD"
         couleur_sac = "Noir"
 
     [profs.almendra]
         nom = "Almendra"
         couleur = "blanc"
-        fond = "rougeFonce"
+        fond = "rougeClair"
         diminutif = "Al"
         couleur_sac = "Rouge"
 
     [profs.sirarpik]
         nom = "Sirarpik"
         couleur = "blanc"
-        fond = "noir"
+        fond = "gris"
         diminutif = "Si"
         couleur_sac = "Gris"
 
@@ -112,7 +114,7 @@
     [profs.claire]
         nom = "Claire"
         couleur = "noir"
-        fond = "bleuCiel"
+        fond = "bleuCielClair"
         diminutif = "Cl"
         couleur_sac = "Bleu Ciel"
 
