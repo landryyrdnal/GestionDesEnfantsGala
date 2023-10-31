@@ -5,11 +5,19 @@ from openpyxl.worksheet import page
 from openpyxl.worksheet.pagebreak import Break, RowBreak
 from openpyxl import *
 from openpyxl.styles import *
-
+import gala_library
 
 var_semaine, liste_niveaux = data_base_process.fill_planning()
+cours_gala = gala_library.ordre_de_passage_creator()
+
+
 # GÉNÉRATION DU TABLEAU D'ÉTIQUETTES
 # Génère le tableau Étiquettes.xlsx avec cinq pages pour toutes les étiquettes du Gala
+#   première page :     Étiquette plastifiée à laisser sur le sac
+#   deuxième page :     À donner par l'enfant en arrivant en répétition
+#   troisième page :    À garder pour récupérer l’enfant après la répétition
+#   quatrième page :    À donner par l'enfant en arrivant au spectacle
+#   cinquième page :    Étiquette Costume Gala
 
 def construction_tableau_etiquettes():
     def eleve_etiquette(cours):
@@ -23,6 +31,7 @@ def construction_tableau_etiquettes():
             eleve["Cours"] = cours.discipline[:4] + " " + cours.jour[:2] + \
                              " " + cours.heure + " " + cours.prof["diminutif"]
             eleve["Couleur"] = cours.prof["couleur_sac"]
+            eleve["Couleur_style"] = f"style_couleur_{cours.prof['fond']}"
             eleve["Nom"] = ligne["Nom"]
             eleve["Prénom"] = ligne["Prénom"]
             eleve["Âge"] = ligne["Âge"]
@@ -30,7 +39,7 @@ def construction_tableau_etiquettes():
             # on renomme les autres cours : Co Ve 17h30 Nat
 
             for i in eleve["Autres cours"]:
-                if i == "" or i == "nan":#or math.isnan(i)
+                if i == "" or i == "nan":  # or math.isnan(i)
                     eleve["Autres cours"].remove(i)
                 for niveau in liste_niveaux:
                     for coursname in niveau.liste_cours:
@@ -128,6 +137,109 @@ def construction_tableau_etiquettes():
     style_couleur.font = Font(name="Arial", size=12, bold=True)
     style_couleur.alignment = Alignment(horizontal="right", vertical="center")
     style_couleur.fill = PatternFill("solid", start_color=liste_couleurs["grisClair"])
+    # couleur noir
+    style_couleur_noir = NamedStyle(name="style_couleur_noir")
+    style_couleur_noir.font = Font(name="Arial", size=12, bold=True, color=liste_couleurs["blanc"])
+    style_couleur_noir.alignment = Alignment(horizontal="right", vertical="center")
+    style_couleur_noir.fill = PatternFill("solid", start_color=liste_couleurs["noir"])
+    # couleur orange
+    style_couleur_orange = NamedStyle(name="style_couleur_orange")
+    style_couleur_orange.font = Font(name="Arial", size=12, bold=True, color=liste_couleurs["blanc"])
+    style_couleur_orange.alignment = Alignment(horizontal="right", vertical="center")
+    style_couleur_orange.fill = PatternFill("solid", start_color=liste_couleurs["orange"])
+    # couleur jaune
+    style_couleur_jaune = NamedStyle(name="style_couleur_jaune")
+    style_couleur_jaune.font = Font(name="Arial", size=12, bold=True, color=liste_couleurs["noir"])
+    style_couleur_jaune.alignment = Alignment(horizontal="right", vertical="center")
+    style_couleur_jaune.fill = PatternFill("solid", start_color=liste_couleurs["jaune"])
+    # couleur rose
+    style_couleur_rose = NamedStyle(name="style_couleur_rose")
+    style_couleur_rose.font = Font(name="Arial", size=12, bold=True, color=liste_couleurs["blanc"])
+    style_couleur_rose.alignment = Alignment(horizontal="right", vertical="center")
+    style_couleur_rose.fill = PatternFill("solid", start_color=liste_couleurs["rose"])
+    # couleur rougeClair
+    style_couleur_rougeClair = NamedStyle(name="style_couleur_rougeClair")
+    style_couleur_rougeClair.font = Font(name="Arial", size=12, bold=True, color=liste_couleurs["blanc"])
+    style_couleur_rougeClair.alignment = Alignment(horizontal="right", vertical="center")
+    style_couleur_rougeClair.fill = PatternFill("solid", start_color=liste_couleurs["rougeClair"])
+    # couleur rougeFonce
+    style_couleur_rougeFonce = NamedStyle(name="style_couleur_rougeFonce")
+    style_couleur_rougeFonce.font = Font(name="Arial", size=12, bold=True, color=liste_couleurs["blanc"])
+    style_couleur_rougeFonce.alignment = Alignment(horizontal="right", vertical="center")
+    style_couleur_rougeFonce.fill = PatternFill("solid", start_color=liste_couleurs["rougeFonce"])
+    # couleur bleuCiel
+    style_couleur_bleuCiel = NamedStyle(name="style_couleur_bleuCiel")
+    style_couleur_bleuCiel.font = Font(name="Arial", size=12, bold=True, color=liste_couleurs["blanc"])
+    style_couleur_bleuCiel.alignment = Alignment(horizontal="right", vertical="center")
+    style_couleur_bleuCiel.fill = PatternFill("solid", start_color=liste_couleurs["bleuCiel"])
+    # couleur bleuFonce
+    style_couleur_bleuFonce = NamedStyle(name="style_couleur_bleuFonce")
+    style_couleur_bleuFonce.font = Font(name="Arial", size=12, bold=True, color=liste_couleurs["blanc"])
+    style_couleur_bleuFonce.alignment = Alignment(horizontal="right", vertical="center")
+    style_couleur_bleuFonce.fill = PatternFill("solid", start_color=liste_couleurs["bleuFonce"])
+    # couleur mauve
+    style_couleur_mauve = NamedStyle(name="style_couleur_mauve")
+    style_couleur_mauve.font = Font(name="Arial", size=12, bold=True, color=liste_couleurs["blanc"])
+    style_couleur_mauve.alignment = Alignment(horizontal="right", vertical="center")
+    style_couleur_mauve.fill = PatternFill("solid", start_color=liste_couleurs["mauve"])
+    # couleur gris
+    style_couleur_gris = NamedStyle(name="style_couleur_gris")
+    style_couleur_gris.font = Font(name="Arial", size=12, bold=True, color=liste_couleurs["blanc"])
+    style_couleur_gris.alignment = Alignment(horizontal="right", vertical="center")
+    style_couleur_gris.fill = PatternFill("solid", start_color=liste_couleurs["gris"])
+    # couleur grisClair
+    style_couleur_grisClair = NamedStyle(name="style_couleur_grisClair")
+    style_couleur_grisClair.font = Font(name="Arial", size=12, bold=True, color=liste_couleurs["blanc"])
+    style_couleur_grisClair.alignment = Alignment(horizontal="right", vertical="center")
+    style_couleur_grisClair.fill = PatternFill("solid", start_color=liste_couleurs["grisClair"])
+    # couleur bleuNoir
+    style_couleur_bleuNoir = NamedStyle(name="style_couleur_bleuNoir")
+    style_couleur_bleuNoir.font = Font(name="Arial", size=12, bold=True, color=liste_couleurs["blanc"])
+    style_couleur_bleuNoir.alignment = Alignment(horizontal="right", vertical="center")
+    style_couleur_bleuNoir.fill = PatternFill("solid", start_color=liste_couleurs["bleuNoir"])
+    # couleur vert
+    style_couleur_vert = NamedStyle(name="style_couleur_vert")
+    style_couleur_vert.font = Font(name="Arial", size=12, bold=True, color=liste_couleurs["blanc"])
+    style_couleur_vert.alignment = Alignment(horizontal="right", vertical="center")
+    style_couleur_vert.fill = PatternFill("solid", start_color=liste_couleurs["vert"])
+    # couleur violet
+    style_couleur_violet = NamedStyle(name="style_couleur_violet")
+    style_couleur_violet.font = Font(name="Arial", size=12, bold=True, color=liste_couleurs["blanc"])
+    style_couleur_violet.alignment = Alignment(horizontal="right", vertical="center")
+    style_couleur_violet.fill = PatternFill("solid", start_color=liste_couleurs["violet"])
+    # couleur blanc
+    style_couleur_blanc = NamedStyle(name="style_couleur_blanc")
+    style_couleur_blanc.font = Font(name="Arial", size=12, bold=True, color=liste_couleurs["noir"])
+    style_couleur_blanc.alignment = Alignment(horizontal="right", vertical="center")
+    style_couleur_blanc.fill = PatternFill("solid", start_color=liste_couleurs["blanc"])
+    # couleur rougeRose
+    style_couleur_rougeRose = NamedStyle(name="style_couleur_rougeRose")
+    style_couleur_rougeRose.font = Font(name="Arial", size=12, bold=True, color=liste_couleurs["blanc"])
+    style_couleur_rougeRose.alignment = Alignment(horizontal="right", vertical="center")
+    style_couleur_rougeRose.fill = PatternFill("solid", start_color=liste_couleurs["rougeRose"])
+    # couleur bleuCielClair
+    style_couleur_bleuCielClair = NamedStyle(name="style_couleur_bleuCielClair")
+    style_couleur_bleuCielClair.font = Font(name="Arial", size=12, bold=True, color=liste_couleurs["noir"])
+    style_couleur_bleuCielClair.alignment = Alignment(horizontal="right", vertical="center")
+    style_couleur_bleuCielClair.fill = PatternFill("solid", start_color=liste_couleurs["bleuCielClair"])
+    # DICTIONNAIRE DES COULEURS 
+    dict_color = {"style_couleur_blanc": style_couleur_blanc,
+                  "style_couleur_noir": style_couleur_noir,
+                  "style_couleur_orange": style_couleur_orange,
+                  "style_couleur_jaune": style_couleur_jaune,
+                  "style_couleur_rose": style_couleur_rose,
+                  "style_couleur_rougeClair": style_couleur_rougeClair,
+                  "style_couleur_rougeFonce": style_couleur_rougeFonce,
+                  "style_couleur_bleuCiel": style_couleur_bleuCiel,
+                  "style_couleur_bleuFonce": style_couleur_bleuFonce,
+                  "style_couleur_mauve": style_couleur_mauve,
+                  "style_couleur_gris": style_couleur_gris,
+                  "style_couleur_grisClair": style_couleur_grisClair,
+                  "style_couleur_bleuNoir": style_couleur_bleuNoir,
+                  "style_couleur_vert": style_couleur_vert,
+                  "style_couleur_violet": style_couleur_violet,
+                  "style_couleur_rougeRose": style_couleur_rougeRose,
+                  "style_couleur_bleuCielClair": style_couleur_rougeRose}
     # commentaire
     style_commentaire = NamedStyle(name="style_commentaire")
     style_commentaire.font = Font(name="Arial", size=11)
@@ -139,7 +251,7 @@ def construction_tableau_etiquettes():
     style_age.alignment = Alignment(horizontal="right", vertical="center")
 
     eleve_vide = {"Cours": " ", "Couleur": " ", "Nom": " ", "Prénom": " ", "Âge": " ", "Autres cours": " ",
-                  "Index": " "}
+                  "Index": " ", "Couleur_style": "style_couleur_blanc"}
 
     # on tri les cours par jour et par heure…
     days = {"Lu": 1, "Ma": 2, "Me": 3, "Je": 4, "Ve": 5, "Sa": 6, "Di": 7}
@@ -203,22 +315,21 @@ def construction_tableau_etiquettes():
                     ws[ws.max_row][2].style, ws[ws.max_row][6].style = style_prenom, style_prenom
 
                     # Cours
-                    ws.append([eleve["Cours"], " ", " ", " ", eleve2["Cours"]])
-                    ws[ws.max_row][0].style = style_titre
-                    ws[ws.max_row][4].style = style_titre
+                    ws.append([eleve["Cours"], " ", " ", str(eleve["Index"]), eleve2["Cours"], " ", " ",
+                               str(eleve2["Index"])])
+                    ws[ws.max_row][0].style, ws[ws.max_row][4].style = style_titre, style_titre
+                    ws[ws.max_row][3].style, ws[ws.max_row][7].style = style_index, style_index
                     ws.merge_cells(start_row=int(ws.max_row), end_row=int(ws.max_row),
-                                   start_column=1, end_column=4)
+                                   start_column=1, end_column=3)
                     ws.merge_cells(start_row=int(ws.max_row), end_row=int(ws.max_row),
-                                   start_column=5, end_column=8)
+                                   start_column=5, end_column=7)
                     # Index / age
-                    ws.append(["  " + " ", str(eleve["Âge"]) + " ans", " ", str(eleve["Index"]),
-                               "  " + " ", str(eleve2["Âge"]) + " ans", " ", str(eleve2["Index"])])
+                    ws.append(["  " + " ", str(eleve["Âge"]) + " ans", " ", " ",
+                               "  " + " ", str(eleve2["Âge"]) + " ans", " ", " "])
                     # on redimensionne la hauteur de ligne
                     rd = ws.row_dimensions[ws.max_row]
                     rd.height = 23
-                    ws[ws.max_row][3].style, ws[ws.max_row][7].style = style_index, style_index
                     ws[ws.max_row][1].style, ws[ws.max_row][5].style = style_age, style_age
-                    #todo: définir des plages d'impression et élargir les bordures
 
                     # Autres cours
                     # premier rang autres cours
@@ -328,7 +439,8 @@ def construction_tableau_etiquettes():
                     ws.merge_cells(start_row=int(ws.max_row), end_row=int(ws.max_row),
                                    start_column=5, end_column=7)
                     ws[ws.max_row][0].style, ws[ws.max_row][4].style = style_commentaire, style_commentaire
-                    ws[ws.max_row][3].style, ws[ws.max_row][7].style = style_couleur, style_couleur
+                    ws[ws.max_row][3].style, ws[ws.max_row][7].style = dict_color[eleve["Couleur_style"]], \
+                                                                       dict_color[eleve2["Couleur_style"]]
                     # deuxième ligne commentaire
                     ws.append([messages_a_imprimer[messages.index(message)][1], " ", " ", " ",
                                messages_a_imprimer[messages.index(message)][1], " ", " "])
