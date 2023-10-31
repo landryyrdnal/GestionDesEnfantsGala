@@ -7,10 +7,6 @@ from openpyxl import *
 from openpyxl.styles import *
 import gala_library
 
-var_semaine, liste_niveaux = data_base_process.fill_planning()
-cours_gala = gala_library.ordre_de_passage_creator()
-
-
 # GÉNÉRATION DU TABLEAU D'ÉTIQUETTES
 # Génère le tableau Étiquettes.xlsx avec cinq pages pour toutes les étiquettes du Gala
 #   première page :     Étiquette plastifiée à laisser sur le sac
@@ -19,17 +15,37 @@ cours_gala = gala_library.ordre_de_passage_creator()
 #   quatrième page :    À donner par l'enfant en arrivant au spectacle
 #   cinquième page :    Étiquette Costume Gala
 
+
+var_semaine, liste_niveaux = data_base_process.fill_planning()
+cours_gala = gala_library.ordre_de_passage_creator()
+
+
 def construction_tableau_etiquettes():
+    def str_cours(cours, tableau_gala):
+        gala = "G" + str(tableau_gala.gala)
+        if tableau_gala.ordre_passage < 10:
+            tableau = "T0"+str(tableau_gala.ordre_passage)
+        else:
+            tableau = "T"+str(tableau_gala.ordre_passage)
+        return gala + tableau + " " + cours.discipline[:4] + " " + cours.jour[:2] + \
+        " " + cours.heure + " " + cours.prof["diminutif"]
+
     def eleve_etiquette(cours):
         """"
         retourne une liste d'élève dans laquelle chaque élève est un dictionnaire
         """
+        # on cherche le tableau correspondant du cours dans la liste du gala pour indiquer
+        # le n° du gala et le n° d’ordre de passage
+        for tableau in cours_gala:
+            if tableau.jour == cours.jour and tableau.heure == cours.heure and tableau.prof == cours.prof["nom"]:
+                print(cours.jour, cours.heure, cours.prof["nom"], "|", tableau.jour, tableau.heure, tableau.prof)
+                tableau_correspondant = tableau
+
         liste_eleve_cours = []
         # pour chaque élève on fait un dictionnaire qu'on ajoute dans la liste des élèves du cours
         for index, ligne in cours.df.iterrows():
             eleve = {}
-            eleve["Cours"] = cours.discipline[:4] + " " + cours.jour[:2] + \
-                             " " + cours.heure + " " + cours.prof["diminutif"]
+            eleve["Cours"] = str_cours(cours, tableau_correspondant)
             eleve["Couleur"] = cours.prof["couleur_sac"]
             eleve["Couleur_style"] = f"style_couleur_{cours.prof['fond']}"
             eleve["Nom"] = ligne["Nom"]
@@ -37,23 +53,23 @@ def construction_tableau_etiquettes():
             eleve["Âge"] = ligne["Âge"]
             eleve["Autres cours"] = ligne["Autres cours"].split(" | ")
             # on renomme les autres cours : Co Ve 17h30 Nat
-
             for i in eleve["Autres cours"]:
                 if i == "" or i == "nan":  # or math.isnan(i)
                     eleve["Autres cours"].remove(i)
                 for niveau in liste_niveaux:
                     for coursname in niveau.liste_cours:
                         if coursname.nom_cours == i:
-                            eleve["Autres cours"][eleve["Autres cours"].index(i)] = coursname.discipline[
-                                                                                    :4] + " " + coursname.jour[:2] + \
-                                                                                    " " + coursname.heure + " " + \
-                                                                                    coursname.prof["diminutif"]
+                            for tableau in cours_gala:
+                                if tableau.jour == coursname.jour and tableau.heure == coursname.heure and tableau.prof == coursname.prof["nom"]:
+                                    eleve["Autres cours"][eleve["Autres cours"].index(i)] = str_cours(coursname, tableau)
             # On enlève les cours dans Autres cours qui sont en double
             autres_cours_sans_doublon = []
             for _autre_cours in eleve["Autres cours"]:
                 if _autre_cours not in autres_cours_sans_doublon:
                     autres_cours_sans_doublon.append(_autre_cours)
             eleve["Autres cours"] = autres_cours_sans_doublon
+            # on tri les autres cours pour qu’ils apparaissent dans l’ordre des galas et des tableaux
+            eleve["Autres cours"] = sorted(eleve["Autres cours"])
             liste_eleve_cours.append(eleve)
         liste_eleve_cours = index_eleves(liste_eleve_cours)
         # on retourne la liste
@@ -109,7 +125,7 @@ def construction_tableau_etiquettes():
     # on enlève la feuille par défaut
     wb.remove(wb['Sheet'])
 
-    # styles
+    # === STYLES ===
     # bordure
     bordure = Side(border_style="thick", color="000000")
     # prenom
@@ -131,7 +147,7 @@ def construction_tableau_etiquettes():
 
     # autres cours
     style_autres_cours = NamedStyle(name="style_autres_cours")
-    style_autres_cours.font = Font(name="Arial", size=12)
+    style_autres_cours.font = Font(name="Arial", size=10)
     # couleur / commentaire
     style_couleur = NamedStyle(name="style_couleur")
     style_couleur.font = Font(name="Arial", size=12, bold=True)
@@ -253,9 +269,9 @@ def construction_tableau_etiquettes():
     eleve_vide = {"Cours": " ", "Couleur": " ", "Nom": " ", "Prénom": " ", "Âge": " ", "Autres cours": " ",
                   "Index": " ", "Couleur_style": "style_couleur_blanc"}
 
-    # on tri les cours par jour et par heure…
+    # on tri les cours par jour et par heure
     days = {"Lu": 1, "Ma": 2, "Me": 3, "Je": 4, "Ve": 5, "Sa": 6, "Di": 7}
-    liste_eleves_cours.sort(reverse=False, key=lambda x: (days[x[0]["Cours"][5:7]], x[0]["Cours"][8:13]))
+    liste_eleves_cours.sort(reverse=False, key=lambda x: (days[x[0]["Cours"][11:13]], x[0]["Cours"][14:19]))
 
     # on ajoute des élèves blancs dans chaque cours (3 dans les cours où le nb d'élève est impaire et 2 dans le
     # cours où le nb d'élève est pair de sorte à faire un espace vide entre chaque cours
@@ -324,8 +340,8 @@ def construction_tableau_etiquettes():
                     ws.merge_cells(start_row=int(ws.max_row), end_row=int(ws.max_row),
                                    start_column=5, end_column=7)
                     # Index / age
-                    ws.append(["  " + " ", str(eleve["Âge"]) + " ans", " ", " ",
-                               "  " + " ", str(eleve2["Âge"]) + " ans", " ", " "])
+                    ws.append(["  " + " ", str(eleve["Âge"]) + " ans", " ", "•",
+                               "  " + " ", str(eleve2["Âge"]) + " ans", " ", "•"])
                     # on redimensionne la hauteur de ligne
                     rd = ws.row_dimensions[ws.max_row]
                     rd.height = 23
