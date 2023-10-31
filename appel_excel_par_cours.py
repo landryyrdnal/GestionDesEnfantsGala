@@ -7,6 +7,7 @@ from openpyxl.utils.dataframe import dataframe_to_rows
 # Génère le fichier liste_appel.xlsx qui sert à faire des listes d’appel
 var_semaine, useless = fill_planning()
 
+
 def contsruction_tableau_appel():
     # écriture sur le fichier excel
     print("Début de la construction du tableau d’appel")
@@ -92,3 +93,7 @@ def contsruction_tableau_appel():
     # sauvegarde du fichier xlsx de sortie
     print("Génération du tableau d'appel terminée dans liste_appel.xlsx")
     wb.save("liste_appel.xlsx")
+
+
+if __name__ == "__main__":
+    contsruction_tableau_appel()

@@ -399,3 +399,7 @@ def construction_tableau_etiquettes():
     # sauvegarde du fichier
     wb.save("Étiquettes.xlsx")
     print("Le fichier a été sauvergardé sous le nom Étiquettes.xlsx")
+
+
+if __name__ == "__main__":
+    construction_tableau_etiquettes()

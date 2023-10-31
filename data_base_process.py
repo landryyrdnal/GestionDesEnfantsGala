@@ -262,3 +262,8 @@ def fill_planning():
         jour.sort(reverse=False, key=lambda x: (x.heure, x.nom_cours))
     return var_semaine, liste_niveaux
 
+if __name__ == "__main__":
+    var_semaine, liste_niveaux = fill_planning()
+    print(var_semaine)
+    print("______________________")
+    print(liste_niveaux)
