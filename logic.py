@@ -25,7 +25,7 @@ def scan_code(code: str, df: pd.DataFrame, gala: str):
             if gala == f'Gala {galas.index(i) + 1}':
                 # todo: trier les chorées pour qu'elles soient affichées dans l'ordre
 
-                chorees = sorted(df.at[index_enfant, f'Cours G{galas.index(i) + 1}'])
+                chorees = sorted(df.at[index_enfant, f'cours G{galas.index(i) + 1}'])
                 if len(chorees) > 0:
                     T1 = str(chorees[0])
                 if len(chorees) > 1:
@@ -36,14 +36,14 @@ def scan_code(code: str, df: pd.DataFrame, gala: str):
                     T4 = str(chorees[4])
         # On indiaue tous les Galas que fait l'enfant
         for i in galas:
-            col = f'Cours G{galas.index(i) + 1}'
+            col = f'cours G{galas.index(i) + 1}'
             if len(df.at[index_enfant, col]) > 0:
-                if col == 'Cours G1':
-                    other_g = other_g + '❶'
-                elif col == 'Cours G2':
-                    other_g = other_g + '❷'
-                elif col == 'Cours G3':
-                    other_g = other_g + '❸'
+                if col == 'cours G1':
+                    other_g = other_g + '1️⃣'
+                elif col == 'cours G2':
+                    other_g = other_g + '2️⃣'
+                elif col == 'cours G3':
+                    other_g = other_g + '3️⃣'
 
         return nom_enfant, T1, T2, T3, T4, other_g
     else :
