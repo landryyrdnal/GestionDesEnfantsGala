@@ -165,6 +165,10 @@ def make_gala_student_list():
                     G2_courses.append(course)
                 elif course.gala == 3 and course not in G3_courses:
                     G3_courses.append(course)
+                # tri des cours en fonction de l’ordre de passage
+                G1_courses = sorted(G1_courses)
+                G2_courses = sorted(G2_courses)
+                G3_courses = sorted(G3_courses)
         eleve = {"nom": student["Nom"], "prénom": student["Prénom"], "G1": G1_courses, "G2": G2_courses,
                  "G3": G3_courses, "téléphone": student["Téléphone"], "mail": student["Mail"]}
         if eleve not in student_gala_list:
