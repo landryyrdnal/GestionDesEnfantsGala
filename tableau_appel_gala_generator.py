@@ -29,19 +29,18 @@ def appel_generator():
                    "G1": G1,
                    "G2": G2,
                    "G3": G3,
-                   "Cours G1": student["G1"],
-                   "Cours G2": student["G2"],
-                   "Cours G3": student["G3"],
-                   "Entrée rep. G1": False,
-                   "Sortie rep. G1": False,
-                   "Entrée G1": False,
-                   "Entrée rep. G2": False,
-                   "Sortie rep. G2": False,
-                   "Entrée G2": False,
-                   "Entrée rep. G3": False,
-                   "Sortie rep. G3": False,
-                   "Entrée G3": False})
+                   "cours G1": student["G1"],
+                   "cours G2": student["G2"],
+                   "cours G3": student["G3"],
+                   "entrée rep. G1": False,
+                   "sortie rep. G1": False,
+                   "entrée G1": False,
+                   "entrée rep. G2": False,
+                   "sortie rep. G2": False,
+                   "entrée G2": False,
+                   "entrée rep. G3": False,
+                   "sortie rep. G3": False,
+                   "entrée G3": False})
 
     df = pd.DataFrame(df)
-    print(df)
     return df
