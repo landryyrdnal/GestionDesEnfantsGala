@@ -69,5 +69,4 @@ if __name__ == "__main__":
     # Définition de la db de sortie
     output_df =  input_df
     print(output_df)
-    output_df.to_excel('test.xlsx')
     GalaApp().run()
