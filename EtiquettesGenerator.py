@@ -16,12 +16,18 @@ import gala_library
 #   cinquième page :    Étiquette Costume Gala
 
 
-var_semaine, liste_niveaux = data_base_process.fill_planning()
-cours_gala = gala_library.ordre_de_passage_creator()
-
-
 def construction_tableau_etiquettes():
+    print("Début de la construction du tableau excel des étiquettes")
+    var_semaine, liste_niveaux = data_base_process.fill_planning()
+    cours_gala = gala_library.ordre_de_passage_creator()
+
     def str_cours(cours, tableau_gala):
+        """
+        sert à standardiser la façon dont sont représentés les cours dans les étiquettes
+        :param cours: du type data_base_process.CoursDanse
+        :param tableau_gala: cours du type gala_library.CoursOrdreGala
+        :return: un nom de cours en str du type : G3T01 Clas Ma 17h30 An
+        """
         gala = "G" + str(tableau_gala.gala)
         if tableau_gala.ordre_passage < 10:
             tableau = "T0"+str(tableau_gala.ordre_passage)
@@ -38,7 +44,6 @@ def construction_tableau_etiquettes():
         # le n° du gala et le n° d’ordre de passage
         for tableau in cours_gala:
             if tableau.jour == cours.jour and tableau.heure == cours.heure and tableau.prof == cours.prof["nom"]:
-                print(cours.jour, cours.heure, cours.prof["nom"], "|", tableau.jour, tableau.heure, tableau.prof)
                 tableau_correspondant = tableau
 
         liste_eleve_cours = []
@@ -76,11 +81,19 @@ def construction_tableau_etiquettes():
         return liste_eleve_cours
 
     def index_eleves(liste_eleve_cours):
-        # on ajoute l'index de chaque élève
+        """
+        sert à ajouter le numéro d’index de chaque élève dans un cours donné
+        :param liste_eleve_cours: liste des élèves dans un cours
+        :return: la même liste des élèves mais chacun avec leur numéro d’indice en fonction de leur prénom
+        """
+        # on tri les élèves par prénom
         liste_eleve_cours.sort(key=lambda x: unidecode.unidecode(x["Prénom"]))
+
         for i in liste_eleve_cours:
+            # on ajoute l’index à l’élève
             i["Index"] = liste_eleve_cours.index(i) + 1
-        # on retourne la liste
+
+        # on retourne la liste complétée
         return liste_eleve_cours
 
     # lister tous les élèves de chaque cours en prenant en compte les cours en doublons et
@@ -266,6 +279,9 @@ def construction_tableau_etiquettes():
     style_age.font = Font(name="Arial", size=12)
     style_age.alignment = Alignment(horizontal="right", vertical="center")
 
+    # === AJOUT DES ÉLÈVES VIDES ===
+
+    # génération d’un élève vide afin d’avoir des espaces blancs entre les groupes
     eleve_vide = {"Cours": " ", "Couleur": " ", "Nom": " ", "Prénom": " ", "Âge": " ", "Autres cours": " ",
                   "Index": " ", "Couleur_style": "style_couleur_blanc"}
 
@@ -283,6 +299,8 @@ def construction_tableau_etiquettes():
             cours.append(eleve_vide)
             cours.append(eleve_vide)
             cours.append(eleve_vide)
+
+    # === IMPRESSION DES PAGES ===
 
     # on détermine les différents messages imprimés dans les différentes pages
     messages = ["Étiquette plastifiée à laisser sur le sac",
