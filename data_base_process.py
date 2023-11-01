@@ -112,6 +112,14 @@ class CoursDanse():
 
 
 def chercher_cours(niveau):
+    """
+    Recherche tous les cours dans la colonne "niveau" et les rassemble
+    dans une liste, tous les cours sont du type CoursDanse
+    :param niveau: string du nom de la colonne dans laquelle sont
+    inscrit des cours ex: « Éveil  Initiation 4 à 6 ans saison 23-24 »
+    :return:une liste de cours du type CoursDanse contenant
+    tous les cours existants dans la colonne "niveau" de la base de donnée
+    """
     liste_noms_cours = []
     discipline = niveau.discipline
     # on cherche tous les cours du niveau et on le met dans la liste liste_cours
@@ -140,11 +148,10 @@ def fill_planning():
     :type: liste des jours [lundi, mardi, mercredi, jeudi, vendredi, samedi, dimanche]
     qui contiennent chacun une sous liste [tous les cours du jour] chaque cours est du type CoursDanse
     """
-    # DÉBUT DU PROCESS
 
     if debug:
-        print("début du process")
-    # On recherche tous les niveaux de cours
+        print("début du processus d’analyse de la base de donnée")
+    # On recherche tous les niveaux de cours en fonction de l’année
     liste_niveaux = []
     for col in workbook:
         if re.search(f"saison {annee_scolaire}", col):
