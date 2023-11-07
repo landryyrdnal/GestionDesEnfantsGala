@@ -18,6 +18,25 @@
     rougeRose = "FF158A"
     bleuCielClair = "A1E3F6"
 
+    [couleurs.rgb]
+        blanc = [255, 255, 255] # Toutes les couleur sont écrites en rgb et correspondent au hexadécimales d’en haut
+        noir = [0, 0, 0] # Le nom des couleurs doit être unique
+        orange = [255, 100, 46]
+        jaune = [255, 203, 0]
+        rose = [250, 161, 241]
+        rougeClair = [238, 15, 20]
+        rougeFonce = [176, 7, 33]
+        bleuCiel = [102, 204, 255]
+        bleuFonce = [0, 134, 192]
+        mauve = [189, 168, 249]
+        gris = [128, 128, 128]
+        grisClair = [196, 196, 196]
+        bleuNoir = [34, 80, 145]
+        vert = [156, 211, 38]
+        violet = [120, 75, 209]
+        rougeRose = [255, 21, 138]
+        bleuCielClair = [161, 227, 246]
+
 # LISTE DES PROFESSEURS
 [profs]
      [profs.lorena]
@@ -134,3 +153,18 @@
     ordre_gala = "Gala 2024 ordre des cours.xlsx" # Tableau à refaire chaque année sur le même
                                                   # modèle en fonction de l’ordre de passage du gala
 
+[galas]
+    [galas.gala_1]
+        numero = 1
+        couleur = "rougeClair"
+        police = "blanc"
+
+    [galas.gala_2]
+        numero = 2
+        couleur = "jaune"
+        police = "noir"
+
+    [galas.gala_3]
+        numero = 3
+        couleur = "bleuFonce"
+        police = "blanc"
