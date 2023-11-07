@@ -267,8 +267,8 @@ def construction_tableau_etiquettes():
                   "style_couleur_bleuNoir": style_couleur_bleuNoir,
                   "style_couleur_vert": style_couleur_vert,
                   "style_couleur_violet": style_couleur_violet,
-                  "style_couleur_rougeRose": style_couleur_rougeRose,
-                  "style_couleur_bleuCielClair": style_couleur_rougeRose}
+                  "style_couleur_rougeRose": style_couleur_bleuCielClair,
+                  "style_couleur_bleuCielClair": style_couleur_bleuCielClair}
     # commentaire
     style_commentaire = NamedStyle(name="style_commentaire")
     style_commentaire.font = Font(name="Arial", size=11)
