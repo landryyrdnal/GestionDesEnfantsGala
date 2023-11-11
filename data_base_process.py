@@ -5,6 +5,7 @@ import toml
 from openpyxl import *
 import unidecode
 import sys
+import os as OS
 
 os = sys.platform
 parameters = "parameters.toml"
@@ -12,12 +13,27 @@ liste_profs = toml.load(parameters)["profs"]
 liste_couleurs = toml.load(parameters)["couleurs"]
 annee_scolaire = toml.load(parameters)["DataBase"]["annee_scolaire"]
 
+def load_excel_db():
+    """Cette fonction sert à charger la base de donnée excel d’export Assoconnect
+    la plus récente dans le répertoire des bases de données"""
+    directory = toml.load(parameters)["DataBase"]["database_rep"]
+    liste_db = OS.listdir(directory)
+    liste_xlsx = []
+    for db in liste_db:
+        if db.endswith("xlsx"):
+            liste_xlsx.append(db)
+    liste_xlsx.sort()
+    return OS.path.join(directory, liste_xlsx[-1])
+
+
+
 # Si vrai sert à afficher les messsages dans la console
 debug = False
 
 # Définition de la base de donnée à utiliser
 try:
-    workbook = pd.read_excel(toml.load(parameters)["DataBase"]["database_file"], engine='openpyxl')
+    fichier_excel = load_excel_db()
+    workbook = pd.read_excel(fichier_excel, engine='openpyxl')
 # Si le fichier excel d’export n’a pas été ouvert et enregistré par excel le code ne fonctionnera pas.
 except ValueError as error:
     print(error)
