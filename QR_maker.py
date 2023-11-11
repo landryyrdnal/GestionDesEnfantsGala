@@ -120,7 +120,7 @@ def make_students_qr_list_for_each_gala():
     return result
 
 
-def make_pdf_qr_labels():
+def make_pdf_qr_labels(etiquettes_data):
     """
     Cette fonction sert à créer les trois fichiers pdf avec toutes les étiquettes QR de chaque Gala
     :return: rien du tout, créer seulement trois fichiers pdf : « etiquettes_G1.pdf », etc.
@@ -129,7 +129,6 @@ def make_pdf_qr_labels():
     row_count = 7
     label_width = A4[0] / col_count
     label_height = A4[1] / row_count
-    etiquettes_data = make_students_qr_list_for_each_gala()
     # Pour chaque gala on vas générer une liste différente d’étiquette avec tous les participants
     for gala in etiquettes_data:
         etiquettes = []
@@ -255,4 +254,5 @@ def make_pdf_qr_labels():
 
 
 if __name__ == "__main__":
-    make_pdf_qr_labels()
+    student_list = make_students_qr_list_for_each_gala()
+    make_pdf_qr_labels(student_list)
