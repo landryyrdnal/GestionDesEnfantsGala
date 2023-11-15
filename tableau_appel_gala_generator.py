@@ -4,7 +4,7 @@ import pandas as pd
 
 
 
-#ordre_de_passage = gala_library.ordre_de_passage_creator()
+
 def appel_generator():
     # importation de la liste des enfants
     gala_student_list = gala_library.make_gala_student_list()
@@ -44,3 +44,6 @@ def appel_generator():
 
     df = pd.DataFrame(df)
     return df
+
+if __name__ == "__main__":
+    appel_generator()
