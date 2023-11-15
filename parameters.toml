@@ -149,7 +149,8 @@
     annee_scolaire = "23-24" # sert à chercher dans les colonnes des cours
     col_verif = "Inscription 23-24 VÉRIFIÉE" # Nom de la colonne vérifiée pour la saison en cours
     col_saison = "Saison 2023-2024" # Nom de la colonne de la saison en cours
-    database_file = "export.xlsx" # Ne devrait pas changer a priori, c’est le nom par défaut de l’export d’Assoconnect
+    database_rep = "./Bases de données/" # Ne devrait pas changer a priori, il s’agit du répertoire où se trouvent les bases de données excel.
+    last_bd = "23-11-10_export.xlsx" # Dernière version de la base de donnée utilisée pour générer les différents fichiers, à modifier à chaque fois qu’une utilisation est faite pour des documents imprimés
     ordre_gala = "Gala 2024 ordre des cours.xlsx" # Tableau à refaire chaque année sur le même
                                                   # modèle en fonction de l’ordre de passage du gala
 
