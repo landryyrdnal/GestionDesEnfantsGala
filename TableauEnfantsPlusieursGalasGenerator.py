@@ -4,9 +4,9 @@ import re
 import openpyxl
 import unidecode
 from openpyxl.styles import *
+from parameters import liste_profs
 
-var_semaine = data_base_process.fill_planning()
-liste_profs = toml.load("parameters.toml")["profs"]
+var_semaine, useless = data_base_process.process_data_base()
 db = openpyxl.load_workbook("Gala 2024 ordre des cours.xlsx")
 sheet = db.active
 
@@ -117,7 +117,7 @@ for student in students:
             elif course.gala == 3 and course not in G3_courses:
                 G3_courses.append(course)
     eleve = {"nom": student["Nom"], "prénom": student["Prénom"], "G1": G1_courses, "G2": G2_courses,
-             "G3": G3_courses, "téléphone": student["Téléphone"]}
+             "G3": G3_courses, "téléphone": student["Téléphone"], "mail":student["Mail"]}
     if eleve not in student_list:
         student_list.append(eleve)
 
@@ -139,7 +139,7 @@ for G in ["❶❷", "❷❸", "❶❸", "❶❷❸"]:
     ws.append([G, "", "Samedi 16 mars", "", "", "dimanche 17 mars"])
     ws[ws.max_row][0].style, ws[ws.max_row][1].style, ws[ws.max_row][2].style, ws[ws.max_row][3].style, ws[ws.max_row][
         4].style, ws[ws.max_row][5].style = st_titres, st_titres, st_titres, st_titres, st_titres, st_titres
-    ws.append(["Prénom", "Nom", "Entrée", "Sortie", "Gala précédent", "Entrée", "Téléphone", "Cours"])
+    ws.append(["Prénom", "Nom", "Entrée", "Sortie", "Gala précédent", "Entrée", "Téléphone", "Mail"])
     ws[ws.max_row][0].style, ws[ws.max_row][1].style, ws[ws.max_row][2].style, ws[ws.max_row][3].style, ws[ws.max_row][
         4].style, ws[ws.max_row][5].style, ws[ws.max_row][6].style, ws[ws.max_row][
         7].style = st_titres, st_titres, st_titres, st_titres, st_titres, st_titres, st_titres, st_titres
@@ -148,21 +148,22 @@ for G in ["❶❷", "❷❸", "❶❸", "❶❷❸"]:
         for student in student_list:
             if len(student["G1"]) >= 1 and len(student["G2"]) >= 1:
                 print(student["prénom"] + "," + student["nom"] + "," + str(student["G1"]) + "," + str(student["G2"]))
-                ws.append([student["prénom"], student["nom"], "", "", "❶", "", student["téléphone"]])
+                ws.append([student["prénom"], student["nom"], "", "", "❶", "", student["téléphone"], student["mail"]])
     if G == "❷❸":
         for student in student_list:
             if len(student["G2"]) >= 1 and len(student["G3"]) >= 1:
                 print(student["prénom"] + "," + student["nom"] + "," + str(student["G2"]) + "," + str(student["G3"]))
-                ws.append([student["prénom"], student["nom"], "", "", "❷", "", student["téléphone"]])
+                ws.append([student["prénom"], student["nom"], "", "", "❷", "", student["téléphone"], student["mail"]])
     if G == "❶❸":
         for student in student_list:
             if len(student["G1"]) >= 1 and len(student["G3"]) >= 1:
                 print(student["prénom"] + "," + student["nom"] + "," + str(student["G1"]) + "," + str(student["G3"]))
-                ws.append([student["prénom"], student["nom"], "", "", "❶", "", student["téléphone"]])
+                ws.append([student["prénom"], student["nom"], "", "", "❶", "", student["téléphone"], student["mail"]])
     if G == "❶❷❸":
         for student in student_list:
             if len(student["G1"]) >= 1 and len(student["G2"]) >= 1 and len(student["G3"]) >= 1:
                 print(student["prénom"] + "," + student["nom"] + "," + str(student["G1"]) + "," + str(student["G3"]))
-                ws.append([student["prénom"], student["nom"], "", "", "❶", "", student["téléphone"]])
+                ws.append([student["prénom"], student["nom"], "", "", "❶", "", student["téléphone"], student["mail"]])
 
-db.save("Tableau Enfants à cocher Gala.xlsx")
+db.save("Tableau Enfants dans plusieurs galas.xlsx")
+print("Tableau Enfants dans plusieurs galas.xlsx enregistré")
