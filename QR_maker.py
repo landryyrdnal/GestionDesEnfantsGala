@@ -6,9 +6,11 @@ from reportlab.lib import colors
 import tableau_appel_gala_generator
 import reportlab_qrcode
 import toml
+import parameters
 
 
-parameters = "parameters.toml"
+liste_profs = parameters.liste_profs
+galas = parameters.galas
 
 def make_qr(data: str):
     """
@@ -49,27 +51,27 @@ class Etiquette_qr():
 
     def get_sac_col(self, student):
         if len(student["cours G1"])>0:
-            for prof_ in toml.load(parameters)["profs"]:
-                if toml.load(parameters)["profs"][prof_]["nom"] == student["cours G1"][0].prof:
-                    sac_G1 = {"text":toml.load(parameters)["profs"][prof_]["couleur_sac"],
-                              "color":toml.load(parameters)["profs"][prof_]["fond"],
-                              "font":toml.load(parameters)["profs"][prof_]["couleur"]}
+            for prof_ in liste_profs:
+                if liste_profs[prof_]["nom"] == student["cours G1"][0].prof:
+                    sac_G1 = {"text":liste_profs[prof_]["couleur_sac"],
+                              "color":liste_profs[prof_]["fond"],
+                              "font":liste_profs[prof_]["couleur"]}
         else: 
             sac_G1 = None
         if len(student["cours G2"])>0:
-            for prof_ in toml.load(parameters)["profs"]:
-                if toml.load(parameters)["profs"][prof_]["nom"] == student["cours G2"][0].prof:
-                    sac_G2 = {"text":toml.load(parameters)["profs"][prof_]["couleur_sac"],
-                              "color":toml.load(parameters)["profs"][prof_]["fond"],
-                              "font":toml.load(parameters)["profs"][prof_]["couleur"]}
+            for prof_ in liste_profs:
+                if liste_profs[prof_]["nom"] == student["cours G2"][0].prof:
+                    sac_G2 = {"text":liste_profs[prof_]["couleur_sac"],
+                              "color":liste_profs[prof_]["fond"],
+                              "font":liste_profs[prof_]["couleur"]}
         else: 
             sac_G2 = None
         if len(student["cours G3"])>0:
-            for prof_ in toml.load(parameters)["profs"]:
-                if toml.load(parameters)["profs"][prof_]["nom"] == student["cours G3"][0].prof:
-                    sac_G3 = {"text":toml.load(parameters)["profs"][prof_]["couleur_sac"],
-                              "color":toml.load(parameters)["profs"][prof_]["fond"],
-                              "font":toml.load(parameters)["profs"][prof_]["couleur"]}
+            for prof_ in liste_profs:
+                if liste_profs[prof_]["nom"] == student["cours G3"][0].prof:
+                    sac_G3 = {"text":liste_profs[prof_]["couleur_sac"],
+                              "color":liste_profs[prof_]["fond"],
+                              "font":liste_profs[prof_]["couleur"]}
         else: 
             sac_G3 = None
         
@@ -157,7 +159,7 @@ def make_pdf_qr_labels(etiquettes_data):
         c = canvas.Canvas(f"étiquettes_G{gala_number}.pdf", pagesize=A4)
 
         def set_color(color):
-            color = toml.load(parameters)["couleurs"]["rgb"][color]
+            color = parameters.liste_couleurs_rgb[color]
             c.setFillColorRGB(color[0] / 255, color[1] / 255, color[2] / 255)
         def draw_text(x, y, text, size, font, rotation, font_col="noir"):
             """
@@ -221,7 +223,7 @@ def make_pdf_qr_labels(etiquettes_data):
                       "Helvetica",
                       False)
             # Impression du n° de Gala
-            gala_color = toml.load(parameters)["galas"][f"gala_{str(gala_number)}"]["couleur"]
+            gala_color = galas[f"gala_{str(gala_number)}"]["couleur"]
             draw_text(x + (width//10)*1.15,
                       y + (height//6)*0.75,
                       f"GALA {str(gala_number)}",

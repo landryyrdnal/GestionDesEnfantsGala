@@ -1,11 +1,12 @@
 import data_base_process
-from data_base_process import liste_couleurs
 import unidecode
 from openpyxl.worksheet import page
 from openpyxl.worksheet.pagebreak import Break, RowBreak
 from openpyxl import *
 from openpyxl.styles import *
 import gala_library
+import toml
+import parameters
 
 # GÉNÉRATION DU TABLEAU D'ÉTIQUETTES
 # Génère le tableau Étiquettes.xlsx avec cinq pages pour toutes les étiquettes du Gala
@@ -14,11 +15,11 @@ import gala_library
 #   troisième page :    À garder pour récupérer l’enfant après la répétition
 #   quatrième page :    À donner par l'enfant en arrivant au spectacle
 #   cinquième page :    Étiquette Costume Gala
-
+liste_couleurs = parameters.liste_couleurs
 
 def construction_tableau_etiquettes():
     print("Début de la construction du tableau excel des étiquettes")
-    var_semaine, liste_niveaux = data_base_process.fill_planning()
+    var_semaine, liste_niveaux = data_base_process.process_data_base()
     cours_gala = gala_library.ordre_de_passage_creator()
 
     def str_cours(cours, tableau_gala):

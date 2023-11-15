@@ -6,14 +6,15 @@ import datetime
 import openpyxl
 from openpyxl.styles import *
 import pandas as pd
+import parameters
 
-parameters = data_base_process.parameters
-var_semaine, useless = data_base_process.fill_planning()
-liste_profs = data_base_process.liste_profs
+
+var_semaine, useless = data_base_process.process_data_base()
+liste_profs = parameters.liste_profs
 
 # Ouverture du fichier excel qui gère l’ordre de passage du gala de l’année
-ordre_gala = toml.load(parameters)["DataBase"]["ordre_gala"]
-workbook = pd.read_excel(ordre_gala)
+ordre_galas = parameters.ordre_galas
+workbook = pd.read_excel(ordre_galas)
 
 
 

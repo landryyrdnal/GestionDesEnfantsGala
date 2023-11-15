@@ -17,7 +17,7 @@ grouped = df.groupby(by=['nom', "téléphone", "mail"])
 # Initialisation d’une liste pour stocker les groupes de frères et sœurs
 family = []
 
-# On parcours chaque groupe
+# On parcours chaque groupe pour déterminer les enfants dans plusieurs galas
 for nom_famille, groupe in grouped:
     groupe['G1G2'] = False
     groupe['G1G3'] = False

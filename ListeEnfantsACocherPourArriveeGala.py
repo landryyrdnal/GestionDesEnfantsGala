@@ -9,8 +9,8 @@ import openpyxl
 from openpyxl.styles import *
 import unidecode
 
-
-var_semaine, useless = data_base_process.fill_planning()
+workbook = data_base_process.load_excel() # chargement du dernier tableau excel
+var_semaine, useless = data_base_process.fill_planning(workbook)
 liste_profs = toml.load("parameters.toml")["profs"]
 db = openpyxl.load_workbook("Gala 2024 ordre des cours.xlsx")
 sheet = db.active

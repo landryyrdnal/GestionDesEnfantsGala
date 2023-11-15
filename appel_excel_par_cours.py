@@ -1,11 +1,11 @@
-from data_base_process import liste_couleurs, liste_profs, semaine, fill_planning
 from openpyxl import *
 from openpyxl.styles import *
 from openpyxl.utils.dataframe import dataframe_to_rows
-
+import data_base_process
+from parameters import liste_couleurs, liste_profs, semaine
 # GÉNÉRATION DU TABLEAU D'APPEL
 # Génère le fichier liste_appel.xlsx qui sert à faire des listes d’appel
-var_semaine, useless = fill_planning()
+var_semaine, useless = data_base_process.process_data_base()
 
 
 def contsruction_tableau_appel():
