@@ -4,26 +4,16 @@ import pandas as pd
 import toml
 import unidecode
 import os
+from parameters import liste_profs, liste_couleurs, annee_scolaire, semaine, col_verif, directory, col_saison
 
 def process_data_base(last=True, last_excel=""):
-    parameters = "parameters.toml"
-    liste_profs = toml.load(parameters)["profs"]
-    liste_couleurs = toml.load(parameters)["couleurs"]
-    annee_scolaire = toml.load(parameters)["DataBase"]["annee_scolaire"]
-    # Si vrai sert à afficher les messsages dans la console
-    debug = False
-    # Colonnes de la base de donnée spécifiques à la saison
-    col_verif = toml.load(parameters,)["DataBase"]["col_verif"]  # nom de la colonne qui atteste de la vérification des inscriptions
-    col_saison = toml.load(parameters)["DataBase"]["col_saison"]  # nom de la colonne qui indique dans la base de donnée la saison
 
-    # Variables diverses
-    semaine = ["Lundi", "Mardi", "Mercredi", "Jeudi", "Vendredi", "Samedi", "Dimanche"]
+    debug = False
 
     def load_excel_db():
         """Cette fonction sert à charger la base de donnée excel d’export Assoconnect
         la plus récente dans le répertoire des bases de données
         :return une str du chemin complet du fichier"""
-        directory = toml.load(parameters)["DataBase"]["database_rep"]
         liste_db = os.listdir(directory)
         liste_xlsx = []
         for db in liste_db:
@@ -83,7 +73,14 @@ def process_data_base(last=True, last_excel=""):
             self.niveau = self.def_niveau()
 
         def __repr__(self):
-            return str(self.jour) + "_" + str(self.heure) + "_" + str(self.prof["nom"] + "_" + str(self.nb_eleves))
+            return "CoursDanse_" + str(self.jour) + "_" + str(self.heure) + "_" + str(self.prof["nom"] + "_" + str(self.nb_eleves))
+
+        def __eq__(self, other):
+            if self.jour == other.jour and self.heure == other.heure and self.prof == other.prof:
+                return True
+            else:
+                return False
+
 
         def def_jour(self):
             jours = ["Lundi", "Mardi", "Mercredi", "Jeudi", "Vendredi", "Samedi", "Dimanche"]
@@ -274,8 +271,8 @@ def process_data_base(last=True, last_excel=""):
     def load_excel(last=True, last_excel = ""):
         """
 
-        :param last:
-        :param last_excel:
+        :param last: True s’il faut utiliser la dernière base de donnée exportée.
+        :param last_excel: str du nom du vieux fichier excel utilisé pour la comparaison
         :return:
         """
         # Définition de la base de donnée à utiliser
@@ -294,9 +291,10 @@ def process_data_base(last=True, last_excel=""):
                   "le fichier est corrompu par Assoconnect.")
         return workbook
 
-
+    # chargement du fichier excel
     workbook = load_excel(last, last_excel)
 
+    # traitement du fichier excel
     var_semaine, liste_niveaux = fill_planning(workbook)
     if last_excel != "":
         print(f"La base de donnée {last_excel} a été traitée")
