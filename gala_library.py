@@ -7,10 +7,9 @@ import openpyxl
 from openpyxl.styles import *
 import pandas as pd
 
-parameters = data_base_process.parameters
-var_semaine, useless = data_base_process.fill_planning()
-print(var_semaine)
-liste_profs = data_base_process.liste_profs
+parameters = "parameters.toml"
+var_semaine, useless = data_base_process.process_data_base()
+liste_profs = toml.load(parameters)["profs"]
 
 
 class CoursOrdreGala:
@@ -174,3 +173,6 @@ def make_gala_student_list():
         if eleve not in student_gala_list:
             student_gala_list.append(eleve)
     return student_gala_list
+
+if __name__ == "__main__":
+    pass

@@ -97,13 +97,13 @@ class Etiquette_qr():
         return string
 
 
-def make_students_qr_list_for_each_gala():
+def make_students_qr_list_for_each_gala(student_list):
     """
     Sert à créer trois liste, une pour chaque gala, dans lesquelles tous les enfants qui y participent sont listés
     :return: Une liste de trois liste pour chaque Gala. Dans chaque liste de Gala les éléments sont de type Etiquette_qr
     il y en a une par enfant
     """
-    student_list = tableau_appel_gala_generator.appel_generator()
+
     student_qr_list_1 = []
     student_qr_list_2 = []
     student_qr_list_3 = []
@@ -254,5 +254,6 @@ def make_pdf_qr_labels(etiquettes_data):
 
 
 if __name__ == "__main__":
-    student_list = make_students_qr_list_for_each_gala()
-    make_pdf_qr_labels(student_list)
+    student_list = tableau_appel_gala_generator.appel_generator()
+    etiquettes_data = make_students_qr_list_for_each_gala(student_list)
+    make_pdf_qr_labels(etiquettes_data)
