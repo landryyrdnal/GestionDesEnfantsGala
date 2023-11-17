@@ -39,7 +39,7 @@
 
 # LISTE DES PROFESSEURS
 [profs]
-     [profs.lorena]
+     [profs.lorena] # nom de la prof sans accent et sans majuscules et sans espaces
         nom = "Loréna" # Prénom de la prof (avec première lettre du nom de famille si doublon)
         couleur = "blanc" # La couleur écrite avec le nom des couleurs ci-dessus
         fond = "bleuCiel" # La couleur écrite avec le nom des couleurs ci-dessus
@@ -150,7 +150,9 @@
     col_verif = "Inscription 23-24 VÉRIFIÉE" # Nom de la colonne vérifiée pour la saison en cours
     col_saison = "Saison 2023-2024" # Nom de la colonne de la saison en cours
     database_rep = "./Bases de données/" # Ne devrait pas changer a priori, il s’agit du répertoire où se trouvent les bases de données excel.
-    last_bd = "23-11-10_export.xlsx" # Dernière version de la base de donnée utilisée pour générer les différents fichiers, à modifier à chaque fois qu’une utilisation est faite pour des documents imprimés
+    fichiers_modif_dir = "./Fichiers à modifier/"
+    result_dir = "./Résultats/"
+    last_db = "23-11-10_export.xlsx" # Dernière version de la base de donnée utilisée pour générer les différents fichiers, à modifier à chaque fois qu’une utilisation est faite pour des documents imprimés
     ordre_gala = "Gala 2024 ordre des cours.xlsx" # Tableau à refaire chaque année sur le même
                                                   # modèle en fonction de l’ordre de passage du gala
 
