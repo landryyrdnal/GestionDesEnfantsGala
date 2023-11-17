@@ -1,11 +1,13 @@
+import os
+
 from openpyxl import *
 from openpyxl.styles import *
 from openpyxl.utils.dataframe import dataframe_to_rows
 import data_base_process
-from parameters import liste_couleurs, liste_profs, semaine
+from parameters import liste_couleurs, liste_profs, semaine, result_dir
 # GÉNÉRATION DU TABLEAU D'APPEL
 # Génère le fichier liste_appel.xlsx qui sert à faire des listes d’appel
-var_semaine, useless = data_base_process.process_data_base()
+var_semaine, useless = data_base_process.process_data_base() # vas chercher la dernière version de l’export pour générer le tableau
 
 
 def contsruction_tableau_appel():
@@ -91,9 +93,10 @@ def contsruction_tableau_appel():
         sheet.column_dimensions["H"].width = 8
 
     # sauvegarde du fichier xlsx de sortie
-    print("Génération du tableau d'appel terminée dans liste_appel.xlsx")
-    wb.save("liste_appel.xlsx")
-
+    file_name = "Tableau des cours dans la semaine.xlsx"
+    path = os.path.join(result_dir, file_name)
+    wb.save(path)
+    print(f"Tableau d’appel enregistré sous {path}")
 
 if __name__ == "__main__":
     contsruction_tableau_appel()
