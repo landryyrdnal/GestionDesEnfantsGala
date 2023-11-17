@@ -1,8 +1,12 @@
 import gala_library
 import pandas as pd
+import data_base_process
+from parameters import result_dir
+import os
 
 # On prend la liste des élèves du gala et on la transforme en dataframe
-gala_students = gala_library.make_gala_student_list()
+var_semaine, useless = data_base_process.process_data_base()
+gala_students = gala_library.make_gala_student_list(var_semaine)
 df = pd.DataFrame(gala_students)
 
 # On nettoie les doublons
@@ -63,7 +67,8 @@ for nom_famille, groupe in grouped:
 family_df = pd.concat(family)
 
 # on exporte le dataframe dans un fichier excel
-excel = "familles.xlsx"
-family_df.to_excel(excel)
+file_name = "familles.xlsx"
+path = os.path.join(result_dir, file_name)
+family_df.to_excel(path, index=False)
 
-print(f"Tableau des familles terminé dans {excel}")
+print(f"Tableau des familles terminé dans {path}")
