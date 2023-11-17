@@ -1,10 +1,10 @@
 import datetime
 import re as re
 import pandas as pd
-import toml
 import unidecode
 import os
-from parameters import liste_profs, liste_couleurs, annee_scolaire, semaine, col_verif, directory, col_saison
+from parameters import liste_profs, annee_scolaire, semaine, col_verif, directory, col_saison
+
 
 def process_data_base(last=True, last_excel=""):
 
@@ -17,7 +17,7 @@ def process_data_base(last=True, last_excel=""):
         liste_db = os.listdir(directory)
         liste_xlsx = []
         for db in liste_db:
-            if db.endswith("xlsx"):
+            if db.endswith("_export.xlsx"):
                 liste_xlsx.append(db)
         liste_xlsx.sort()
         return os.path.join(directory, liste_xlsx[-1])
