@@ -1,3 +1,5 @@
+import os
+
 import openpyxl
 import data_base_process
 import toml
@@ -6,14 +8,13 @@ import datetime
 import openpyxl
 from openpyxl.styles import *
 import pandas as pd
-import parameters
+from parameters import liste_profs, ordre_galas, result_dir
 
 
 var_semaine, useless = data_base_process.process_data_base()
-liste_profs = parameters.liste_profs
 
 # Ouverture du fichier excel qui gère l’ordre de passage du gala de l’année
-ordre_galas = parameters.ordre_galas
+print( ordre_galas)
 workbook = pd.read_excel(ordre_galas)
 
 
@@ -263,5 +264,7 @@ for G in ["G1", "G2", "G3"]:
     ws.column_dimensions["F"].width = 9
     ws.column_dimensions["G"].width = 31
 
-wb.save("Tableau Changement de costumes.xlsx")
-print("Tableau des changements de costume enregistré")
+
+file_name = os.path.join(result_dir,"Tableau Changement de costumes.xlsx")
+wb.save(file_name)
+print(f"Tableau des changements de costume enregistré dans {file_name}")
