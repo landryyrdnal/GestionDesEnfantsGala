@@ -1,12 +1,8 @@
-import QR_maker
-import data_base_process
-import toml
 import os
 import pandas as pd
-import gala_library
 import tableau_appel_gala_generator
 import QR_maker
-from parameters import directory, last_db, old_excel
+from parameters import last_db, old_excel, result_dir
 
 def liste_eleves_reliquat():
     # création de l’ancienne base de donnée des enfants (étiquettes déjà imprimées à un moment T, la version du fichier
@@ -38,7 +34,6 @@ def liste_eleves_reliquat():
             # Si les cours ont changé, ajouter l'élève à la base de données des enfants modifiés
             if cours_modifies:
                 # on modifie les noms et les prénoms afin d’identifier les changements
-                print(new_student["nom"], type(new_student["nom"]))
                 new_student["nom"] = "NEW_" + new_student["nom"]
                 new_student["prénom"] = "NEW_" + new_student["prénom"]
                 old_student["nom"] = "OLD_" + old_student["nom"]
@@ -59,7 +54,8 @@ def liste_eleves_reliquat():
 
     # On consigne les trois listes d’enfants ajoutés, enlevés et modifiés dans le fichier excel
     nom_fichier = f'Reliquats depuis le dernier tirage le {old_excel.split(".xlsx")[0]}.xlsx'
-    with pd.ExcelWriter(nom_fichier, engine="openpyxl") as writer:
+    path = os.path.join(result_dir, nom_fichier)
+    with pd.ExcelWriter(path, engine="openpyxl") as writer:
         # Enregistrer le DataFrame des enfants ajoutés sur une feuille nommée 'Enfants_Ajoutés'
         enfants_ajoutes.to_excel(writer, sheet_name='Enfants Ajoutés', index=False)
         # Imprimer le DataFrame des enfants supprimés sur une feuille nommée 'Enfants_Supprimés'

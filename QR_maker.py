@@ -1,16 +1,13 @@
-from reportlab.lib.colors import HexColor
 from reportlab.lib.units import mm
 from reportlab.pdfgen import canvas
 from reportlab.lib.pagesizes import A4
-from reportlab.lib import colors
 import tableau_appel_gala_generator
 import reportlab_qrcode
-import toml
-import parameters
+import os
+from parameters import liste_profs, galas, result_dir, liste_couleurs_rgb as colors
 
 
-liste_profs = parameters.liste_profs
-galas = parameters.galas
+
 
 def make_qr(data: str):
     """
@@ -135,7 +132,6 @@ def make_pdf_qr_labels(etiquettes_data):
     for gala in etiquettes_data:
         etiquettes = []
         gala_number = etiquettes_data.index(gala) + 1
-        print(gala_number)
         nb_etiquettes = len(gala)
         nb_etiquettes_par_page = col_count * row_count
 
@@ -156,10 +152,11 @@ def make_pdf_qr_labels(etiquettes_data):
                         print(str(index), str(etiquette.code), "x", str(etiquette.x), "y", str(etiquette.y))
 
         # création du fichier pdf
-        c = canvas.Canvas(f"étiquettes_G{gala_number}.pdf", pagesize=A4)
+        file_path = os.path.join(result_dir, f"étiquettes_G{gala_number}.pdf")
+        c = canvas.Canvas(file_path, pagesize=A4)
 
         def set_color(color):
-            color = parameters.liste_couleurs_rgb[color]
+            color = colors[color]
             c.setFillColorRGB(color[0] / 255, color[1] / 255, color[2] / 255)
         def draw_text(x, y, text, size, font, rotation, font_col="noir"):
             """
