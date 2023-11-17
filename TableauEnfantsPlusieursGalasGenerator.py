@@ -4,10 +4,10 @@ import re
 import openpyxl
 import unidecode
 from openpyxl.styles import *
-from parameters import liste_profs
+from parameters import liste_profs, ordre_galas
 
 var_semaine, useless = data_base_process.process_data_base()
-db = openpyxl.load_workbook("Gala 2024 ordre des cours.xlsx")
+db = ordre_galas
 sheet = db.active
 
 
