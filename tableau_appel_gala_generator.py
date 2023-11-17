@@ -1,13 +1,16 @@
 import unidecode
+
+import data_base_process
 import gala_library
 import pandas as pd
 
 
 
 
-def appel_generator():
+def appel_generator(last=True, last_excel=""):
     # importation de la liste des enfants
-    gala_student_list = gala_library.make_gala_student_list()
+    var_semaine, useless = data_base_process.process_data_base(last, last_excel)
+    gala_student_list = gala_library.make_gala_student_list(var_semaine)
 
     # Préparation du dataframe qui sera utilisé pour scanner les gens
     df = []
