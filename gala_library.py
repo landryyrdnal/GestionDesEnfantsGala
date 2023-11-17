@@ -1,15 +1,8 @@
-import openpyxl
-import data_base_process
-import toml
+
 import re
 import datetime
-import openpyxl
-from openpyxl.styles import *
 import pandas as pd
-
-parameters = "parameters.toml"
-var_semaine, useless = data_base_process.process_data_base()
-liste_profs = toml.load(parameters)["profs"]
+from parameters import liste_profs, parameters, ordre_galas
 
 
 class CoursOrdreGala:
@@ -55,8 +48,7 @@ def ordre_de_passage_creator():
     :return: retourne une liste de cours du type CoursOrdreGala
     """
     # Ouverture du fichier excel qui gère l’ordre de passage du gala de l’année
-    ordre_gala = toml.load(parameters)["DataBase"]["ordre_gala"]
-    workbook = pd.read_excel(ordre_gala)
+    workbook = pd.read_excel(ordre_galas)
     ordre_de_passage = []
 
     for index, row in workbook.iterrows():
@@ -124,7 +116,7 @@ def time_between_two_courses(ordre_de_passage,first: CoursOrdreGala, second: Cou
     return str(heures) + ":" + str(minutes) + ":" + str(secondes)
 
 
-def list_every_student():
+def list_every_student(var_semaine):
     students = []
     for level in var_semaine:
         for course in level:
@@ -133,9 +125,9 @@ def list_every_student():
     return students
 
 
-def make_gala_student_list():
+def make_gala_student_list(var_semaine):
     ordre_de_passage = ordre_de_passage_creator()
-    student_list = list_every_student()
+    student_list = list_every_student(var_semaine)
     student_gala_list = []
     for student in student_list:
         G1_courses = []
@@ -174,5 +166,3 @@ def make_gala_student_list():
             student_gala_list.append(eleve)
     return student_gala_list
 
-if __name__ == "__main__":
-    pass
