@@ -1,18 +1,14 @@
-import openpyxl
-import unidecode
-
 import data_base_process
-import toml
 import re
-import datetime
+import os
 import openpyxl
 from openpyxl.styles import *
 import unidecode
+from parameters import ordre_galas, liste_profs, result_dir
 
-workbook = data_base_process.load_excel() # chargement du dernier tableau excel
-var_semaine, useless = data_base_process.fill_planning(workbook)
-liste_profs = toml.load("parameters.toml")["profs"]
-db = openpyxl.load_workbook("Gala 2024 ordre des cours.xlsx")
+
+var_semaine, useless = data_base_process.process_data_base()# chargement du dernier tableau excel
+db = openpyxl.load_workbook(ordre_galas)
 sheet = db.active
 
 
@@ -223,5 +219,7 @@ for G in ["❶", "❷", "❸"]:
     ws.column_dimensions["F"].width = 10
     ws.column_dimensions["G"].width = 10
 
-wb.save("Tableau Enfants à cocher Gala.xlsx")
-print("Tableau des enfants à cocher est sauvegardé")
+file_name = "Tableau Enfants à cocher Gala.xlsx"
+path = os.path.join(result_dir, file_name)
+wb.save(path)
+print(f"Le tableau des enfants à cocher est sauvegardé sous {path}")
